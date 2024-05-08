@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 3. Parameterisation &mdash; lambeq 0.1.dev49+gd7e8c1f documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/table-wrap.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Step 4: Training" href="../training.html" />
+    <link rel="prev" title="Step 2. Diagram rewriting" href="rewrite.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            lambeq
+              <img src="../_static/lambeq_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1.dev49+gd7e8c1f
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipeline.html">Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsing.html">Syntactic parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../string-diagrams.html">String diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-cases.html">lambeq use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing to lambeq</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NLP-101</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nlp-intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp-data.html">Working with text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp-class.html">Text classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp-ml.html">Machine learning best practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp-refs.html">References for further study</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sentence-input.html">Step 1. Sentence input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rewrite.html">Step 2. Diagram rewriting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Step 3. Parameterisation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Quantum-case">Quantum case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Classical-case">Classical case</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Matrix-product-states">Matrix product states</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../training.html">Step 4: Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Choosing a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual-training.html">Advanced: Manual training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced: low-level lambeq</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extend-lambeq.html">Advanced: Extending lambeq</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Toolkit</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../root-api.html">lambeq package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../package-api.html">Subpackages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../uml-diagrams.html">Class diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-line interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">External links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://qnlp.cambridgequantum.com/downloads.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://qnlp.cambridgequantum.com/generate.html">Web demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discopy.readthedocs.io">DisCoPy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">lambeq</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Step 3. Parameterisation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/CQCL/lambeq/blob/main/docs/tutorials/parameterise.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars and line breaks on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+    white-space: pre;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Step-3.-Parameterisation">
+<h1>Step 3. Parameterisation<a class="headerlink" href="#Step-3.-Parameterisation" title="Permalink to this heading"></a></h1>
+<p>Up to this point of the pipeline, a sentence is still represented as a <a class="reference internal" href="../glossary.html#term-string-diagram"><span class="xref std std-term">string diagram</span></a>, independent of any low-level decisions such as tensor dimensions or specific <a class="reference internal" href="../glossary.html#term-quantum-gate"><span class="xref std std-term">quantum gate</span></a> choices. This abstract form can be turned into a concrete <a class="reference internal" href="../glossary.html#term-quantum-circuit"><span class="xref std std-term">quantum circuit</span></a> or <a class="reference internal" href="../glossary.html#term-tensor-network"><span class="xref std std-term">tensor network</span></a> by applying ansätze. An <a class="reference internal" href="../glossary.html#term-ansatz-plural-ansatze"><span class="xref std std-term">ansatz</span></a> can be seen as a map that determines choices such as the number of <a class="reference internal" href="../glossary.html#term-qubit"><span class="xref std std-term">qubits</span></a> that every wire of the <a class="reference internal" href="../glossary.html#term-string-diagram"><span class="xref std std-term">string diagram</span></a> is associated with and the concrete parameterised quantum states that correspond to each word. In <code class="docutils literal notranslate"><span class="pre">lambeq</span></code>, <a class="reference internal" href="../glossary.html#term-ansatz-plural-ansatze"><span class="xref std std-term">ansätze</span></a> can be added by extending one of the classes <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.TensorAnsatz" title="lambeq.ansatz.TensorAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensorAnsatz</span></code></a> or <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.CircuitAnsatz" title="lambeq.ansatz.CircuitAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircuitAnsatz</span></code></a> depending on the type of the experiment.</p>
+<p><a class="reference download internal" download="" href="../_downloads/ee016236bfa5b6c7f3dbc71f73c98bb0/parameterise.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">code</span></code></a></p>
+<section id="Quantum-case">
+<h2>Quantum case<a class="headerlink" href="#Quantum-case" title="Permalink to this heading"></a></h2>
+<p>For the quantum case, the library comes equipped with the following ansätze:</p>
+<table class="docutils align-default" id="tbl-ansatze">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ansatz</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.IQPAnsatz" title="lambeq.ansatz.IQPAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQPAnsatz</span></code></a></p></td>
+<td><p>Instantaneous Quantum Polynomial ansatz. An IQP ansatz interleaves layers of Hadamard gates with diagonal unitaries. This class uses <code class="docutils literal notranslate"><span class="pre">n_layers-1</span></code> adjacent CRz gates to implement each diagonal unitary (see <a class="reference internal" href="../bibliography.html#hea2019" id="id1"><span>[Hea2019]</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.Sim14Ansatz" title="lambeq.ansatz.Sim14Ansatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sim14Ansatz</span></code></a></p></td>
+<td><p>A modification of Circuit 14 from <a class="reference internal" href="../bibliography.html#sja2019" id="id2"><span>[SJA2019]</span></a>. Replaces circuit-block construction with two rings of CRx gates, in opposite orientation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.Sim15Ansatz" title="lambeq.ansatz.Sim15Ansatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sim15Ansatz</span></code></a></p></td>
+<td><p>A modification of Circuit 15 from <a class="reference internal" href="../bibliography.html#sja2019" id="id3"><span>[SJA2019]</span></a>. Replaces circuit-block construction with two rings of CNOT gates, in opposite orientation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.Sim4Ansatz" title="lambeq.ansatz.Sim4Ansatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sim4Ansatz</span></code></a></p></td>
+<td><p>Circuit 4 from <a class="reference internal" href="../bibliography.html#sja2019" id="id4"><span>[SJA2019]</span></a>. Uses a layer each of Rx and Rz gates, followed by a ladder of CRx gates per layer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.StronglyEntanglingAnsatz" title="lambeq.ansatz.StronglyEntanglingAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">StronglyEntanglingAnsatz</span></code></a></p></td>
+<td><p>Ansatz using three single qubit rotations (RzRyRz) followed by a ladder of CNOT gates with different ranges per layer. Adapted from the <a class="reference internal" href="../glossary.html#term-PennyLane"><span class="xref std std-term">PennyLane</span></a> implementation of <code class="xref py py-mod docutils literal notranslate"><span class="pre">StronglyEntanglingLayers</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In the example below we will use the class <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.IQPAnsatz" title="lambeq.ansatz.IQPAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQPAnsatz</span></code></a>, which turns the <a class="reference internal" href="../glossary.html#term-string-diagram"><span class="xref std std-term">string diagram</span></a> into a standard <a class="reference internal" href="../glossary.html#term-IQP-circuit"><span class="xref std std-term">IQP circuit</span></a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lambeq</span> <span class="kn">import</span> <span class="n">BobcatParser</span>
+
+<span class="n">sentence</span> <span class="o">=</span> <span class="s1">&#39;John walks in the park&#39;</span>
+
+<span class="c1"># Get a string diagram</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">BobcatParser</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+<span class="n">diagram</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">sentence2diagram</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In order to create an <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.IQPAnsatz" title="lambeq.ansatz.IQPAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">IQPAnsatz</span></code></a> instance, we need to define the number of <a class="reference internal" href="../glossary.html#term-qubit"><span class="xref std std-term">qubits</span></a> for all atomic types that occur in the diagram – in this case, for the noun type and the sentence type. The following code produces a <a class="reference internal" href="../glossary.html#term-quantum-circuit"><span class="xref std std-term">circuit</span></a> by assigning 1 qubit to the noun type and 1 qubit to the sentence type. Further, the number of IQP layers (<code class="docutils literal notranslate"><span class="pre">n_layers</span></code>) is set to 2.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lambeq</span> <span class="kn">import</span> <span class="n">AtomicType</span><span class="p">,</span> <span class="n">IQPAnsatz</span>
+
+<span class="c1"># Define atomic types</span>
+<span class="n">N</span> <span class="o">=</span> <span class="n">AtomicType</span><span class="o">.</span><span class="n">NOUN</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">AtomicType</span><span class="o">.</span><span class="n">SENTENCE</span>
+
+<span class="c1"># Convert string diagram to quantum circuit</span>
+<span class="n">ansatz</span> <span class="o">=</span> <span class="n">IQPAnsatz</span><span class="p">({</span><span class="n">N</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">n_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">ansatz</span><span class="p">(</span><span class="n">diagram</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_parameterise_7_0.png" src="../_images/tutorials_parameterise_7_0.png" />
+</div>
+</div>
+<p>This produces a quantum circuit in <a class="reference internal" href="../lambeq.backend.html#lambeq.backend.quantum.Diagram" title="lambeq.backend.quantum.Diagram"><code class="xref py py-class docutils literal notranslate"><span class="pre">lambeq.backend.quantum.Diagram</span></code></a> form.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lambeq also includes other circuit ansätze. See <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.CircuitAnsatz" title="lambeq.ansatz.CircuitAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircuitAnsatz</span></code></a> for further reference.</p>
+</div>
+<p>Conversion to <a class="reference internal" href="../glossary.html#term-pytket"><span class="xref std std-term">pytket</span></a> format is very simple:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytket.circuit.display</span> <span class="kn">import</span> <span class="n">render_circuit_jupyter</span>
+
+<span class="n">tket_circuit</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">to_tk</span><span class="p">()</span>
+
+<span class="n">render_circuit_jupyter</span><span class="p">(</span><span class="n">tket_circuit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div style="resize: vertical; overflow: auto; height: 400px; display: block">
+    <iframe srcdoc="
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;!-- Download Vue 3--&gt;
+&lt;script type=&#34;application/javascript&#34; src=&#34;https://cdn.jsdelivr.net/npm/vue@3&#34;&gt;&lt;/script&gt;
+&lt;!-- Download Circuit Renderer with styles --&gt;
+&lt;script type=&#34;application/javascript&#34; src=&#34;https://unpkg.com/pytket-circuit-renderer@0.7/dist/pytket-circuit-renderer.umd.js&#34;&gt;&lt;/script&gt;
+&lt;link rel=&#34;stylesheet&#34; href=&#34;https://unpkg.com/pytket-circuit-renderer@0.7/dist/pytket-circuit-renderer.css&#34;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+
+
+    &lt;div id=&#34;circuit-display-vue-container-8d04c943-04df-418f-8265-6151df9e8a5c&#34; class=&#34;pytket-circuit-display-container&#34;&gt;
+        &lt;div style=&#34;display: none&#34;&gt;
+            &lt;div id=&#34;circuit-json-to-display&#34;&gt;{&#34;bits&#34;: [[&#34;c&#34;, [0]], [&#34;c&#34;, [1]], [&#34;c&#34;, [2]], [&#34;c&#34;, [3]], [&#34;c&#34;, [4]], [&#34;c&#34;, [5]], [&#34;c&#34;, [6]], [&#34;c&#34;, [7]], [&#34;c&#34;, [8]], [&#34;c&#34;, [9]]], &#34;commands&#34;: [{&#34;args&#34;: [[&#34;q&#34;, [0]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*John__n_0&#34;], &#34;type&#34;: &#34;Rx&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [6]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [10]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*park__n_0&#34;], &#34;type&#34;: &#34;Rx&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [0]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*John__n_1&#34;], &#34;type&#34;: &#34;Rz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]], [&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*walks__n.r@s_0&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]], [&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_0&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]], [&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*the__n@n.l_0&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [10]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*park__n_1&#34;], &#34;type&#34;: &#34;Rz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [0]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*John__n_2&#34;], &#34;type&#34;: &#34;Rx&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]], [&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_1&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [10]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*park__n_2&#34;], &#34;type&#34;: &#34;Rx&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]], [&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*walks__n.r@s_1&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]], [&#34;q&#34;, [6]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_2&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]], [&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*the__n@n.l_1&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]], [&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_4&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [6]], [&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_3&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]], [&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_5&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [6]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]], [&#34;q&#34;, [10]]], &#34;op&#34;: {&#34;type&#34;: &#34;CX&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [10]], [&#34;c&#34;, [1]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]], [&#34;q&#34;, [3]]], &#34;op&#34;: {&#34;type&#34;: &#34;CX&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]], [&#34;q&#34;, [6]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_6&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [9]], [&#34;c&#34;, [0]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [3]], [&#34;c&#34;, [5]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]], [&#34;q&#34;, [4]]], &#34;op&#34;: {&#34;type&#34;: &#34;CX&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [6]], [&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;params&#34;: [&#34;2*in__s.r@n.r.r@n.r@s@n.l_7&#34;], &#34;type&#34;: &#34;CRz&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [2]], [&#34;c&#34;, [4]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [4]], [&#34;c&#34;, [7]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [0]], [&#34;q&#34;, [5]]], &#34;op&#34;: {&#34;type&#34;: &#34;CX&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [6]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [1]], [&#34;c&#34;, [6]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [5]], [&#34;c&#34;, [9]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [0]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]], [&#34;q&#34;, [8]]], &#34;op&#34;: {&#34;type&#34;: &#34;CX&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [8]], [&#34;c&#34;, [3]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [0]], [&#34;c&#34;, [8]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]]], &#34;op&#34;: {&#34;type&#34;: &#34;H&#34;}}, {&#34;args&#34;: [[&#34;q&#34;, [7]], [&#34;c&#34;, [2]]], &#34;op&#34;: {&#34;type&#34;: &#34;Measure&#34;}}], &#34;created_qubits&#34;: [], &#34;discarded_qubits&#34;: [], &#34;implicit_permutation&#34;: [[[&#34;q&#34;, [0]], [&#34;q&#34;, [0]]], [[&#34;q&#34;, [1]], [&#34;q&#34;, [1]]], [[&#34;q&#34;, [2]], [&#34;q&#34;, [2]]], [[&#34;q&#34;, [3]], [&#34;q&#34;, [3]]], [[&#34;q&#34;, [4]], [&#34;q&#34;, [4]]], [[&#34;q&#34;, [5]], [&#34;q&#34;, [5]]], [[&#34;q&#34;, [6]], [&#34;q&#34;, [6]]], [[&#34;q&#34;, [7]], [&#34;q&#34;, [7]]], [[&#34;q&#34;, [8]], [&#34;q&#34;, [8]]], [[&#34;q&#34;, [9]], [&#34;q&#34;, [9]]], [[&#34;q&#34;, [10]], [&#34;q&#34;, [10]]]], &#34;phase&#34;: &#34;0.0&#34;, &#34;qubits&#34;: [[&#34;q&#34;, [0]], [&#34;q&#34;, [1]], [&#34;q&#34;, [2]], [&#34;q&#34;, [3]], [&#34;q&#34;, [4]], [&#34;q&#34;, [5]], [&#34;q&#34;, [6]], [&#34;q&#34;, [7]], [&#34;q&#34;, [8]], [&#34;q&#34;, [9]], [&#34;q&#34;, [10]]]}&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;circuit-display-container
+                :circuit-element-str=&#34;&#39;#circuit-json-to-display&#39;&#34;
+                :init-render-options=&#34;initRenderOptions&#34;
+        &gt;&lt;/circuit-display-container&gt;
+    &lt;/div&gt;
+    &lt;script type=&#34;application/javascript&#34;&gt;
+      const circuitRendererUid = &#34;8d04c943-04df-418f-8265-6151df9e8a5c&#34;;
+      const displayOptions = JSON.parse(&#39;{}&#39;);
+
+      // Script to initialise the circuit renderer app
+
+const { createApp } = Vue;
+const circuitDisplayContainer = window[&#34;pytket-circuit-renderer&#34;].default;
+// Init variables to be shared between circuit display instances
+if (typeof window.pytketCircuitDisplays === &#34;undefined&#34;) {
+    window.pytketCircuitDisplays = {};
+}
+// Create the root Vue component
+const app = createApp({
+    delimiters: [&#39;[[#&#39;, &#39;#]]&#39;],
+    components: { circuitDisplayContainer },
+    data () {
+      return {
+        initRenderOptions: displayOptions,
+      }
+    }
+})
+app.config.unwrapInjectedRef = true;
+app.mount(&#34;#circuit-display-vue-container-&#34;+circuitRendererUid);
+window.pytketCircuitDisplays[circuitRendererUid] = app;
+    &lt;/script&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"
+            width="100%" height="100%"
+            style="border: none; outline: none; overflow: auto"></iframe>
+</div></div>
+</div>
+<p>Exporting to <a class="reference internal" href="../glossary.html#term-pytket"><span class="xref std std-term">pytket</span></a> format provides additional functionality and allows interoperability. For example, obtaining a <a class="reference internal" href="../glossary.html#term-Qiskit"><span class="xref std std-term">Qiskit</span></a> circuit is trivial:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytket.extensions.qiskit</span> <span class="kn">import</span> <span class="n">tk_to_qiskit</span>
+
+<span class="n">qiskit_circuit</span> <span class="o">=</span> <span class="n">tk_to_qiskit</span><span class="p">(</span><span class="n">tket_circuit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To use <code class="docutils literal notranslate"><span class="pre">tk_to_qiskit</span></code>, first install the <code class="docutils literal notranslate"><span class="pre">pytket-qiskit</span></code> extension by running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pytket-qiskit</span></code>. For more information see <a class="reference external" href="https://cqcl.github.io/tket/pytket/api/#extensions">the pytket documentation</a>.</p>
+</div>
+</section>
+<section id="Classical-case">
+<h2>Classical case<a class="headerlink" href="#Classical-case" title="Permalink to this heading"></a></h2>
+<p>In the case of a classical experiment, instantiating one of the tensor <a class="reference internal" href="../glossary.html#term-ansatz-plural-ansatze"><span class="xref std std-term">ansätze</span></a> requires the user to assign dimensions to each one of the atomic types occurring in the diagram. In the following code, we parameterise a <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.TensorAnsatz" title="lambeq.ansatz.TensorAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensorAnsatz</span></code></a> instance with <span class="math notranslate nohighlight">\(d_n=4\)</span> for the base dimension of the noun space, and <span class="math notranslate nohighlight">\(d_s=2\)</span> as the dimension of the sentence space:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lambeq</span> <span class="kn">import</span> <span class="n">TensorAnsatz</span>
+<span class="kn">from</span> <span class="nn">lambeq.backend.tensor</span> <span class="kn">import</span> <span class="n">Dim</span>
+
+<span class="n">tensor_ansatz</span> <span class="o">=</span> <span class="n">TensorAnsatz</span><span class="p">({</span><span class="n">N</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">S</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)})</span>
+<span class="n">tensor_diagram</span> <span class="o">=</span> <span class="n">tensor_ansatz</span><span class="p">(</span><span class="n">diagram</span><span class="p">)</span>
+
+<span class="n">tensor_diagram</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_parameterise_15_0.png" src="../_images/tutorials_parameterise_15_0.png" />
+</div>
+</div>
+<p>Note that the wires of the diagram are now annotated with the dimensions corresponding to each type, indicating that the result is a concrete <a class="reference internal" href="../glossary.html#term-tensor-network"><span class="xref std std-term">tensor network</span></a>.</p>
+<section id="Matrix-product-states">
+<h3>Matrix product states<a class="headerlink" href="#Matrix-product-states" title="Permalink to this heading"></a></h3>
+<p>In classical experiments of this kind, the tensors associated with certain words, such as conjunctions, can become extremely large. In some cases, the order of these tensors can be 12 or even higher (<span class="math notranslate nohighlight">\(d^{12}\)</span> elements, where <span class="math notranslate nohighlight">\(d\)</span> is the base dimension), which makes efficient execution of the experiment impossible. In order to address this problem, <code class="docutils literal notranslate"><span class="pre">lambeq</span></code> includes <a class="reference internal" href="../glossary.html#term-ansatz-plural-ansatze"><span class="xref std std-term">ansätze</span></a> for converting tensors into various forms of <a class="reference internal" href="../glossary.html#term-matrix-product-state-MPS"><span class="xref std std-term">matrix product states</span></a> (MPSs).</p>
+<p>The following code applies the <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.SpiderAnsatz" title="lambeq.ansatz.SpiderAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpiderAnsatz</span></code></a>, which splits tensors with order greater than 2 to sequences of order-2 tensors (i.e. matrices), connected with <a class="reference internal" href="../glossary.html#term-spider"><span class="xref std std-term">spiders</span></a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lambeq</span> <span class="kn">import</span> <span class="n">SpiderAnsatz</span>
+<span class="kn">from</span> <span class="nn">lambeq.backend.tensor</span> <span class="kn">import</span> <span class="n">Dim</span>
+
+<span class="n">spider_ansatz</span> <span class="o">=</span> <span class="n">SpiderAnsatz</span><span class="p">({</span><span class="n">N</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">S</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)})</span>
+<span class="n">spider_diagram</span> <span class="o">=</span> <span class="n">spider_ansatz</span><span class="p">(</span><span class="n">diagram</span><span class="p">)</span>
+<span class="n">spider_diagram</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_parameterise_19_0.png" src="../_images/tutorials_parameterise_19_0.png" />
+</div>
+</div>
+<p>Note that the preposition “in” is now represented by a <a class="reference internal" href="../glossary.html#term-matrix-product-state-MPS"><span class="xref std std-term">matrix product state</span></a> of 4 linked matrices, which is a very substantial reduction in the space required to store the tensors.</p>
+<p>Another option is the <a class="reference internal" href="../lambeq.ansatz.html#lambeq.ansatz.MPSAnsatz" title="lambeq.ansatz.MPSAnsatz"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPSAnsatz</span></code></a> class, which converts large tensors to sequences of order-3 tensors connected with <a class="reference internal" href="../glossary.html#term-cup"><span class="xref std std-term">cups</span></a>. In this setting, the user needs to also define the <em>bond dimension</em>, that is, the dimensionality of the wire that connects the tensors together.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lambeq</span> <span class="kn">import</span> <span class="n">MPSAnsatz</span>
+<span class="kn">from</span> <span class="nn">lambeq.backend.tensor</span> <span class="kn">import</span> <span class="n">Dim</span>
+
+<span class="n">mps_ansatz</span> <span class="o">=</span> <span class="n">MPSAnsatz</span><span class="p">({</span><span class="n">N</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">S</span><span class="p">:</span> <span class="n">Dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)},</span> <span class="n">bond_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">mps_diagram</span> <span class="o">=</span> <span class="n">mps_ansatz</span><span class="p">(</span><span class="n">diagram</span><span class="p">)</span>
+<span class="n">mps_diagram</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_parameterise_21_0.png" src="../_images/tutorials_parameterise_21_0.png" />
+</div>
+</div>
+<p class="rubric">See also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../package-api.html#api-ansatz"><span class="std std-ref">lambeq.ansatz package</span></a></p></li>
+<li><p><a class="reference internal" href="../examples/tensor.html"><span class="doc">Example notebook tensor.ipynb</span></a></p></li>
+<li><p><a class="reference internal" href="../examples/circuit.html"><span class="doc">Example notebook circuit.ipynb</span></a></p></li>
+<li><p><a class="reference internal" href="discocat.html"><span class="doc">DisCoCat in lambeq</span></a></p></li>
+<li><p><a class="reference internal" href="extend-lambeq.html"><span class="doc">Extending lambeq</span></a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rewrite.html" class="btn btn-neutral float-left" title="Step 2. Diagram rewriting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../training.html" class="btn btn-neutral float-right" title="Step 4: Training" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2024 Cambridge Quantum Computing Ltd..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
