@@ -8,6 +8,12 @@ on:
       - 'release'
   pull_request:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 env:
   WORKFLOWS_DIR: .github/workflows
   DOCS_DIR: docs
