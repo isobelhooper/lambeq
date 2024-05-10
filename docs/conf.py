@@ -18,9 +18,6 @@
 # -- Project information -----------------------------------------------------
 
 from lambeq import __version__ as version, __version_info__ as v
-trim_version = f'{v[0]}.{v[1]}.{v[2]}'
-if version.startswith(f'{trim_version}.'):
-    version = f'{v[0]}.{v[1]}.{int(v[2]) - 1} [git latest]'
 release = version
 
 
