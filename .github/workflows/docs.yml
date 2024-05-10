@@ -52,7 +52,9 @@ jobs:
       run: ${{ env.WORKFLOWS_DIR }}/build-docs
     - name: Zip up documentation to store as release asset
       if: ${{ github.event_name == 'release' }}
-      run: tar -cavf lambeq-docs-${{ github.event.release.tag_name }} ${{ env.DOCS_BUILD_DIR }}
+      run: |
+        cd ${{ env.DOCS_BUILD_DIR }}
+        tar -cavf lambeq-docs-${{ github.event.release.tag_name }} .
     - name: Add documentation artifact to release, if this was triggered by a release
       if: ${{ github.event_name == 'release' }}
       run: gh release upload ${{ github.event.release.tag_name }} lambeq-docs-${{ github.event.release.tag_name }} --clobber
@@ -68,7 +70,7 @@ jobs:
       if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'release') }}
       uses: actions/upload-pages-artifact@v3
       with:
-        path: docs/_build/html/
+        path: ${{ env.DOCS_BUILD_DIR }}
     - name: Deploy to GitHub Pages
       if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'release') }}
       id: deployment
