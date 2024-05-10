@@ -71,6 +71,6 @@ jobs:
         tar -cavf lambeq-docs-${{ github.event.release.tag_name }} -C ${{ env.DOCS_BUILD_DIR }} .
     - name: (on release) Add documentation artifact as release asset
       if: ${{ github.event_name == 'release' }}
-      run: gh release upload ${{ github.event.release.tag_name }} lambeq-docs-${{ github.event.release.tag_name }} --clobber
+      run: gh release upload ${{ github.event.release.tag_name }} lambeq-docs-${{ github.event.release.tag_name }}.tar.gz --clobber
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
