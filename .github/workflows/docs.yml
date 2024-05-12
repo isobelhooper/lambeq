@@ -48,6 +48,9 @@ jobs:
       uses: Timmy/plantuml-action@v1
       with:
         args: '-v -DPLANTUML_LIMIT_SIZE=8192 -tpng ${{ env.DOCS_DIR }}/puml/*.puml -o img'
+    - name: If we're generating docs for unified doc site deployment, use a different conf.py
+      if: ${{ github.event_name == 'release' }}
+      run: cp ${{ env.DOCS_DIR }}/unified_docs_conf.py ${{ env.DOCS_DIR }}/conf.py
     - name: Build documentation
       run: ${{ env.WORKFLOWS_DIR }}/build-docs
     - name: Save documentation as artifact
