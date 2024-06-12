@@ -1,0 +1,17 @@
+{# Displays the logo of your documentation site, in the header navbar. #}
+
+ {#- Logo HTML and image #}
+ <a class="navbar-brand logo" href="https://cqcl.github.io/quantinuum-docs/index.html">
+   {# get all the brand information from html_theme_option #}
+   {# Theme switching is only available when JavaScript is enabled.
+    # Thus we should add the extra image using JavaScript, defaulting
+    # depending on the value of default_mode; and light if unset.
+    #}
+   {% set alt = "%s - Home" % docstitle %}
+   {% if default_mode is undefined or default_mode == "auto" %}
+     {% set default_mode = "light" %}
+   {% endif %}
+   {% set js_mode = "light" if default_mode == "dark" else "dark" %}
+   <img src="https://cqcl.github.io/quantinuum-docs/lambeq/_static/images/Quantinuum_logo_{{ default_mode }}.png" class="logo__image only-{{ default_mode }}" alt="{{ alt }}"/>
+   <script>document.write(`<img src="https://cqcl.github.io/quantinuum-docs/lambeq/_static/images/Quantinuum_logo_{{ js_mode }}.png" class="logo__image only-{{ js_mode }}" alt="{{ alt }}"/>`);</script>
+ </a>
