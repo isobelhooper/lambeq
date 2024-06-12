@@ -72,8 +72,10 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'pydata_sphinx_theme'
+html_theme = 'sphinx_book_theme'
 html_theme_options = {
+  'navbar_start': ['navbar-root-logo'],
+  'navbar_center': ['navbar-nav'],
   'navigation_depth': -1,
   'header_links_before_dropdown': 2,
 }
@@ -95,6 +97,7 @@ html_favicon = '_static/images/favicon.ico'
 # CSS for allowing text wrapping within table cells
 html_css_files = [
     'css/table-wrap.css',
+    'css/custom.css',
 ]
 
 def autodoc_skip_member(app, what, name, obj, skip, options):
